@@ -16,20 +16,33 @@
         <li><a href="#">Link2</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        <% if user_signed_in? %>
+          <% if current_user.admin %>
+            <li><a href="<%= panel_admins_path %>">Admin Panel</a></li>
+          <% end %>
+        <% end %>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <% if user_signed_in? %>
+              Bienvenido <%= current_user.username %>
+            <% else %>
+              Log in
+            <% end %>
+            <span class="caret"></span>
+          </a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
+            <% if user_signed_in? %>
+              <li><%= link_to 'My Histories', user_histories_path %></li>
+              <li><%= link_to 'Edit info', edit_user_registration_path %></li>
+              <li class="divider"></li>
+              <li><%= link_to 'Log out', destroy_user_session_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to 'Sign up', new_user_registration_path %></li>
+              <li><%= link_to 'Log in', new_user_session_path %></li>
+            <% end %>
           </ul>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-
