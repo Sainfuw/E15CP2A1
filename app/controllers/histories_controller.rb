@@ -22,6 +22,10 @@ class HistoriesController < ApplicationController
   def edit
   end
 
+  def user
+    @histories = current_user.histories
+  end
+
   # POST /histories
   # POST /histories.json
   def create
@@ -61,14 +65,6 @@ class HistoriesController < ApplicationController
       format.html { redirect_to histories_url, notice: 'History was successfully destroyed.' }
       format.json { head :no_content }
     end
-  end
-
-  def user
-    @histories = current_user.histories
-  end
-
-  def admin
-    @user = User.all
   end
 
   private
